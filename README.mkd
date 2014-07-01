@@ -4,7 +4,7 @@
 
 ### Download binary from CI \(AppVeyor\)
 
-[AppVeyor](https://ci.appveyor.com/api/projects/status/5c99vvedrlvoyj7t) \> Latest build \> Artifacts \> FILE NAME
+[AppVeyor](https://ci.appveyor.com/project/cd01/poshcomplete-server) \> Latest build \> Artifacts \> FILE NAME
 
 
 ### Build in windows
