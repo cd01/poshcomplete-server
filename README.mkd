@@ -1,0 +1,1 @@
+# poshcomplete-server [![Build status](https://ci.appveyor.com/api/projects/status/5c99vvedrlvoyj7t)](https://ci.appveyor.com/project/cd01/poshcomplete-server)

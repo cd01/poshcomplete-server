@@ -1,0 +1,6 @@
+*.suo
+PoshComplete/bin
+PoshComplete/obj
+packages/*
+!packages/repositories.config
+
