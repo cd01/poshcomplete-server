@@ -1,1 +1,18 @@
 # poshcomplete-server [![Build status](https://ci.appveyor.com/api/projects/status/5c99vvedrlvoyj7t)](https://ci.appveyor.com/project/cd01/poshcomplete-server)
+
+## Installation
+
+### Download binary from CI \(AppVeyor\)
+
+[AppVeyor](https://ci.appveyor.com/api/projects/status/5c99vvedrlvoyj7t) \> Latest build \> Artifacts \> FILE NAME
+
+
+### Build in windows
+
+``` ps1
+git clone git@github.com:cd01/poshcomplete-server.git
+cd poshcomplete-server
+nuget restore PoshComplete.sln
+msbuild
+```
+
