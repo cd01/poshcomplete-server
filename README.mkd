@@ -16,3 +16,13 @@ nuget restore PoshComplete.sln
 msbuild
 ```
 
+<!--
+### on Ubuntu
+
+``` sh
+# http://headsigned.com/article/running-nuget-command-line-on-linux
+mono NuGet.exe restore PoshComplete.sln
+xbuild PoshComplete/PoshComplete.csproj.ubuntu
+```
+-->
+
