@@ -7,5 +7,4 @@ packages/*
 Microsoft.Build.dll
 NuGet.exe
 PoshComplete/PoshComplete.csproj.ubuntu
-PoshComplete/dictionary/Cmdlet.json
 
