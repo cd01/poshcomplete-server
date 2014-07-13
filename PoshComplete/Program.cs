@@ -1,5 +1,6 @@
 ﻿using Nancy;
 using Nancy.Hosting.Self;
+using NMaier.GetOptNet;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Json;
@@ -13,7 +14,10 @@ namespace PoshComplete
 	{
 		static void Main(string[] args)
 		{
-            using (var nancyHost = new NancyHost(new Uri("http://localhost:1234")))
+            Opts opts = new Opts();
+            opts.Parse(args);
+
+            using (var nancyHost = new NancyHost(new Uri("http://localhost:" + opts.Port.ToString())))
             {
                 nancyHost.Start();
                 Console.ReadLine();
@@ -21,6 +25,13 @@ namespace PoshComplete
             }
 		}
 	}
+
+    class Opts : GetOpt
+    {
+         [Argument("port", HelpText = "")]
+         [ShortArgument('p')]
+         public int Port = 1234;
+    }
  
     public class Server : Nancy.NancyModule
     {
