@@ -69,6 +69,12 @@ namespace PoshComplete
                     return Encoding.UTF8.GetString(ms.ToArray(), 0, (int)ms.Length);
                 }
             };
+
+            Get["/stop/"] = (query) =>
+            {
+                Environment.Exit(0);
+                return "";
+            };
         }
     }
 
