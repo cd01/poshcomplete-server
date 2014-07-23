@@ -10,19 +10,9 @@
 ### Build in windows
 
 ``` ps1
-git clone git@github.com:cd01/poshcomplete-server.git
+git clone https://github.com/cd01/poshcomplete-server.git
 cd poshcomplete-server
 nuget restore PoshComplete.sln
 msbuild
 ```
-
-<!--
-### on Ubuntu
-
-``` sh
-# http://headsigned.com/article/running-nuget-command-line-on-linux
-mono NuGet.exe restore PoshComplete.sln
-xbuild PoshComplete/PoshComplete.csproj.ubuntu
-```
--->
 
