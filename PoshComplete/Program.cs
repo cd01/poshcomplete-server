@@ -14,14 +14,17 @@ namespace PoshComplete
 	{
 		static void Main(string[] args)
 		{
-            Opts opts = new Opts();
-            opts.Parse(args);
-
-            using (var nancyHost = new NancyHost(new Uri("http://localhost:" + opts.Port.ToString())))
+            if (System.Diagnostics.Process.GetProcessesByName("PoshComplete").Count() == 1)
             {
-                nancyHost.Start();
-                Console.ReadLine();
-                nancyHost.Stop();
+                Opts opts = new Opts();
+                opts.Parse(args);
+
+                using (var nancyHost = new NancyHost(new Uri("http://localhost:" + opts.Port.ToString())))
+                {
+                    nancyHost.Start();
+                    Console.ReadLine();
+                    nancyHost.Stop();
+                }
             }
 		}
 	}
