@@ -10,10 +10,10 @@ using System.Linq;
 
 namespace PoshComplete
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
+    class Program
+    {
+        static void Main(string[] args)
+        {
             if (System.Diagnostics.Process.GetProcessesByName("PoshComplete").Count() == 1)
             {
                 Opts opts = new Opts();
@@ -26,8 +26,8 @@ namespace PoshComplete
                     nancyHost.Stop();
                 }
             }
-		}
-	}
+        }
+    }
 
     class Opts : GetOpt
     {
@@ -48,36 +48,18 @@ namespace PoshComplete
                     string line = query.inputText;
                     List<Candidate> list = new List<Candidate>();
 
-                    #if __MonoCS__
-                        StaticConfiguration.DisableErrorTraces = false;
-                        List<Candidate> candidates;
+                    var candidates =
+                        System.Management.Automation.CommandCompletion.CompleteInput(
+                            line,
+                            line.Length,
+                            null,
+                            System.Management.Automation.PowerShell.Create()
+                        ).CompletionMatches;
 
-                        string json;
-                        using (var sr = new System.IO.StreamReader("./dictionary/Cmdlet.json", Encoding.GetEncoding("UTF-8")))
-                            json = sr.ReadToEnd();
-
-                        using (var jsonMs = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(json)))
-                            candidates = (List<Candidate>)serializer.ReadObject(jsonMs);
-
-                        foreach (var cand in candidates)
-                            if (cand.word.StartsWith(line, StringComparison.OrdinalIgnoreCase))
-                                list.Add(new Candidate() { word = cand.word.Replace("'", ""),
-                                                           kind = cand.kind.ToString(),
-                                                           menu = cand.menu.Replace("\r\n", "") });
-                    #else
-                        var candidates =
-                            System.Management.Automation.CommandCompletion.CompleteInput(
-                                line,
-                                line.Length,
-                                null,
-                                System.Management.Automation.PowerShell.Create()
-                            ).CompletionMatches;
-
-                        foreach (var cand in candidates)
-                            list.Add(new Candidate() { word = cand.CompletionText.Replace("'", ""),
-                                                       kind = cand.ResultType.ToString(),
-                                                       menu = cand.ToolTip.Replace("\r\n", "") });
-                    #endif
+                    foreach (var cand in candidates)
+                        list.Add(new Candidate() { word = cand.CompletionText.Replace("'", ""),
+                                                    kind = cand.ResultType.ToString(),
+                                                    menu = cand.ToolTip.Replace("\r\n", "") });
 
                     serializer.WriteObject(ms, list);
                     return Encoding.UTF8.GetString(ms.ToArray(), 0, (int)ms.Length);
