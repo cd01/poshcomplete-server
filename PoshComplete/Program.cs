@@ -1,5 +1,6 @@
 ﻿using Nancy;
 using Nancy.Hosting.Self;
+using Nancy.ModelBinding;
 using NMaier.GetOptNet;
 using System;
 using System.Collections.Generic;
@@ -40,38 +41,46 @@ namespace PoshComplete
     {
         public Server()
         {
-            Get["/poshcomplete/{inputText}"] = (query) =>
+            Post["/poshcomplete"] = _ =>
             {
+                var buffer = this.Bind<Buffer>();
                 var serializer = new DataContractJsonSerializer(typeof(List<Candidate>));
                 using (var ms = new System.IO.MemoryStream())
                 {
-                    string line = query.inputText;
                     List<Candidate> list = new List<Candidate>();
 
+                    var ret = System.Management.Automation.CommandCompletion.MapStringInputToParsedInput(
+                                                                            buffer.text, buffer.text.Length);
                     var candidates =
                         System.Management.Automation.CommandCompletion.CompleteInput(
-                            line,
-                            line.Length,
-                            null,
+                            ret.Item1, ret.Item2, ret.Item3, null,
                             System.Management.Automation.PowerShell.Create()
                         ).CompletionMatches;
 
                     foreach (var cand in candidates)
-                        list.Add(new Candidate() { word = cand.CompletionText.Replace("'", ""),
-                                                    kind = cand.ResultType.ToString(),
-                                                    menu = cand.ToolTip.Replace("\r\n", "") });
+                        list.Add(new Candidate()
+                        {
+                            word = cand.CompletionText.Replace("'", ""),
+                            kind = cand.ResultType.ToString(),
+                            menu = cand.ToolTip.Replace("\r\n", "")
+                        });
 
                     serializer.WriteObject(ms, list);
                     return Encoding.UTF8.GetString(ms.ToArray(), 0, (int)ms.Length);
                 }
             };
 
-            Get["/stop/"] = (query) =>
+            Get["/stop/"] = _ =>
             {
                 Environment.Exit(0);
                 return "";
             };
         }
+    }
+
+    public class Buffer
+    {
+        public string text { get; set; }
     }
 
     public class Candidate
