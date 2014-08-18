@@ -22,6 +22,7 @@ namespace PoshComplete
 
                 using (var nancyHost = new NancyHost(new Uri("http://localhost:" + opts.Port.ToString())))
                 {
+                    StaticConfiguration.DisableErrorTraces = false;
                     nancyHost.Start();
                     Console.ReadLine();
                     nancyHost.Stop();
