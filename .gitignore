@@ -6,4 +6,4 @@ packages/*
 !packages/repositories.config
 Microsoft.Build.dll
 NuGet.exe
-
+.nuget/
