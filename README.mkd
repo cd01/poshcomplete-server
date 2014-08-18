@@ -2,9 +2,8 @@
 
 ## Installation
 
-### Download binary from CI \(AppVeyor\)
-
-[AppVeyor](https://ci.appveyor.com/project/cd01/poshcomplete-server) \> Latest build \> Artifacts \> FILE NAME
+Download from [here](https://ci.appveyor.com/project/cd01/poshcomplete-server/build/artifacts)  
+But [poshcomplete-vim](https://github.com/cd01/poshcomplete-vim) include poshcomplete-server.
 
 
 ### Build in windows
